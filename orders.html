@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c0d507fb28.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Main Container */
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Orders Table */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Order Details Section */
+        .order-details {
+            margin-top: 40px;
+        }
+
+        .details-table th,
+        .details-table td {
+            text-align: left;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background-color: #444;
+        }
+
+        .cancel-btn, .edit-btn {
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover, .edit-btn:hover {
+            background-color: #e53935;
+        }
+
+        .edit-input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        .edit-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .save-btn {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .save-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="header">
+        <a href="index.html"><img src="IMAGE\MAINLOGO.png" class="logo" alt="Main Logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="orders.html">My Orders</a></li>
+                <li id="lg-bag"><a href="cart.html"><i class="fas fa-shopping-cart" style="color:black"></i></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container">
+        <h1>My Orders</h1>
+        <table id="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="order-list">
+                <!-- Orders will be dynamically populated -->
+            </tbody>
+        </table>
+
+        <div class="order-details" id="order-details" style="display:none;">
+            <h2>Order Details</h2>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="order-items">
+                    <!-- Order items will be dynamically populated -->
+                </tbody>
+            </table>
+            <a href="#" class="back-btn" onclick="hideOrderDetails()">Back to Orders</a>
+            <button class="cancel-btn" onclick="cancelOrder()">Cancel Order</button>
+            <button class="edit-btn" onclick="editOrder()">Edit Order</button>
+            <button class="save-btn" onclick="saveOrder()">Save Changes</button>
+        </div>
+
+        <a href="cart.html" class="back-btn">Back to Cart</a>
+    </div>
+</section>
+<section id="newsletter" class="section-p1 section-m1" >
+    <div class="newstext">
+        <h4>Sign-Up For Newsletters</h4>
+        <p>Get E-mail updates about our latest books and <span>special offers.</span> </p>
+    </div>
+    <div class="form">
+        <input type="text" placeholder="Your E-mail Address ">
+        <button class="sup">Sign-Up</button>
+    </div>
+</section>
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="IMAGE/MAINLOGO.png" style="width: 150px; height: auto">
+            <h4>contact</h4>
+            <p><strong>Address: </strong>University Road NBP Reservation Brgy. Poblacion, City of Muntinlupa.</p>
+            <p><strong>Phone: </strong>(+63) 931-701-5678</p>
+            <p><strong>Hours: </strong>10:00 - 18:00, Mon - Sat</p> 
+            <div class="follow">
+                <h4>Follow us</h4>
+                <div class="icon">
+                <a href="https://www.facebook.com/ihaveautism.crdo" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#" target="_blank">About us</a>
+            <a href="#" target="_blank">delivery Information</a>
+            <a href="#"target="_blank">Privacy policy</a>
+            <a href="#"target="_blank">Terms & Conditions</a>
+            <a href="#"target="_blank">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign-in</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="copywrite">
+            <p>&#169;2023, Flandez, Ricardo - HTML and CSS Template  
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ordersData = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('order_')) {
+                    const order = JSON.parse(localStorage.getItem(key));
+                    ordersData.push(order);
+                }
+            }
+
+            if (ordersData.length > 0) {
+                const ordersTable = document.getElementById("order-list");
+
+                ordersData.forEach(order => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${order.id}</td>
+                        <td>${new Date(order.id).toLocaleDateString()}</td>
+                        <td>₱${order.total.toFixed(2)}</td>
+                        <td>${order.status}</td>
+                        <td><button onclick="viewOrderDetails(${order.id})">View Details</button></td>
+                    `;
+                    ordersTable.appendChild(row);
+                });
+
+                // Show order details
+                window.viewOrderDetails = function (orderId) {
+                    const order = ordersData.find(order => order.id === orderId);
+                    if (order) {
+                        const orderDetails = document.getElementById("order-details");
+                        const orderItems = document.getElementById("order-items");
+
+                        orderDetails.dataset.orderId = orderId;
+
+                        orderItems.innerHTML = "";
+                        order.items.forEach(item => {
+                            const itemRow = document.createElement("tr");
+                            itemRow.innerHTML = `
+                                <td>${item.product}</td>
+                                <td><input type="number" class="edit-input" value="${item.quantity}" data-item="${item.product}" /></td>
+                                <td>₱${item.price.toFixed(2)}</td>
+                                <td>₱${(item.quantity * item.price).toFixed(2)}</td>
+                            `;
+                            orderItems.appendChild(itemRow);
+                        });
+
+                        document.querySelector("table").style.display = "none";
+                        orderDetails.style.display = "block";
+                    }
+                };
+
+                // Hide order details
+                window.hideOrderDetails = function () {
+                    document.getElementById("order-details").style.display = "none";
+                    document.querySelector("table").style.display = "table";
+                };
+
+                // Cancel Order
+                window.cancelOrder = function () {
+                    const orderId = document.getElementById("order-details").dataset.orderId;
+                    if (confirm('Are you sure you want to cancel this order?')) {
+                        localStorage.removeItem('order_' + orderId);
+                        location.reload();
+                        alert('Order canceled successfully.');
+                    }
+                };
+
+                // Edit Order
+                window.editOrder = function () {
+                    const saveBtn = document.querySelector(".save-btn");
+                    saveBtn.style.display = "inline-block";
+                    const editBtn = document.querySelector(".edit-btn");
+                    editBtn.style.display = "none";
+                };
+
+                // Save Order Changes
+                window.saveOrder = function () {
+                    const orderId = document.getElementById("order-details").dataset.orderId;
+                    const order = ordersData.find(order => order.id === orderId);
+
+                    if (order) {
+                        const orderItems = document.getElementById("order-items").getElementsByTagName("tr");
+                        Array.from(orderItems).forEach(itemRow => {
+                            const input = itemRow.querySelector(".edit-input");
+                            if (input) {
+                                const newQuantity = parseInt(input.value);
+                                if (newQuantity > 0 && !isNaN(newQuantity)) {
+                                    const product = input.dataset.item;
+                                    const item = order.items.find(item => item.product === product);
+                                    item.quantity = newQuantity;
+                                }
+                            }
+                        });
+
+                        // Update the total price
+                        order.total = order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+                        // Save the updated order to localStorage
+                        localStorage.setItem('order_' + orderId, JSON.stringify(order));
+
+                        // Hide Save button and show Edit button again
+                        const saveBtn = document.querySelector(".save-btn");
+                        saveBtn.style.display = "none";
+                        const editBtn = document.querySelector(".edit-btn");
+                        editBtn.style.display = "inline-block";
+
+                        alert('Order updated successfully.');
+                    }
+                };
+            } else {
+                const ordersTable = document.getElementById("order-list");
+                const row = document.createElement("tr");
+                row.innerHTML = "<td colspan='5'>No orders found.</td>";
+                ordersTable.appendChild(row);
+            }
+        });
+    </script>
+</body>
+
+</html>

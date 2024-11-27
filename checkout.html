@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Delivery Details</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Include Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://kit.fontawesome.com/c0d507fb28.js" crossorigin="anonymous"></script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        #delivery-form {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="header">
+        <a href="index.html"><img src="IMAGE/MAINLOGO.png" class="logo" alt="Main Logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="orders.html">My Orders</a>
+                </li>
+                <li id="lg-bag">
+                    <a href="cart.html"><i class="fas fa-shopping-cart" style="color:black"></i></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="delivery-details">
+        <h2 style="text-align: center;">Delivery Details</h2>
+        <form id="delivery-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <label for="address">Shipping Address:</label>
+            <textarea id="address" name="address" placeholder="Enter your shipping address" required></textarea>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
+            <label for="map">Select Delivery Location:</label>
+            <div id="map"></div>
+            
+            <!-- Hidden inputs to capture latitude and longitude -->
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            
+            <!-- Button to pin the user's current location -->
+            <button type="button" id="use-my-location" style="background-color: green; color: white;">Use My Current Location</button>
+            
+            <button type="submit">Confirm Order</button>
+            <button type="button" onclick="window.location.href='index.html'" style="background-color: red;">Cancel</button>
+        </form>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="IMAGE/MAINLOGO.png" style="width: 150px; height: auto">
+            <h4>contact</h4>
+            <p><strong>Address: </strong>University Road NBP Reservation Brgy. Poblacion, City of Muntinlupa.</p>
+            <p><strong>Phone: </strong>(+63) 931-701-5678</p>
+            <p><strong>Hours: </strong>10:00 - 18:00, Mon - Sat</p> 
+            <div class="follow">
+                <h4>Follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/ihaveautism.crdo" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#" target="_blank">About us</a>
+            <a href="#" target="_blank">Delivery Information</a>
+            <a href="#" target="_blank">Privacy policy</a>
+            <a href="#" target="_blank">Terms & Conditions</a>
+            <a href="#" target="_blank">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign-in</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="copywrite">
+            <p>&#169;2023, Flandez, Ricardo - HTML and CSS Template</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const defaultLocation = [14.676041, 121.043700]; // Default: Metro Manila
+            const map = L.map('map').setView(defaultLocation, 12);
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add draggable marker
+            let marker = L.marker(defaultLocation, { draggable: true }).addTo(map);
+
+            // Update hidden inputs when marker is moved
+            marker.on('moveend', function (event) {
+                const position = marker.getLatLng();
+                document.getElementById('latitude').value = position.lat;
+                document.getElementById('longitude').value = position.lng;
+            });
+
+            // Set marker position on map click
+            map.on('click', function (event) {
+                const { lat, lng } = event.latlng;
+                marker.setLatLng([lat, lng]);
+                document.getElementById('latitude').value = lat;
+                document.getElementById('longitude').value = lng;
+            });
+
+            // Use current location button
+            document.getElementById('use-my-location').addEventListener('click', function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        marker.setLatLng([lat, lng]);
+                        map.setView([lat, lng], 12);
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lng;
+                    }, function () {
+                        alert('Unable to retrieve your location.');
+                    });
+                } else {
+                    alert('Geolocation is not supported by this browser.');
+                }
+            });
+
+            // Handle form submission to store order and redirect to orders page
+            const checkoutForm = document.getElementById('delivery-form');
+            checkoutForm.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Collect order data
+                const orderData = {
+                    id: new Date().getTime(), // Unique ID using timestamp
+                    name: document.getElementById("name").value,
+                    address: document.getElementById("address").value,
+                    phone: document.getElementById("phone").value,
+                    latitude: document.getElementById("latitude").value,
+                    longitude: document.getElementById("longitude").value,
+                    total: 1200.00, // Static total, replace with actual order total
+                    status: "Pending",
+                    items: [
+                        { product: "Product 1", quantity: 2, price: 500 },
+                        { product: "Product 2", quantity: 1, price: 200 }
+                    ]
+                };
+
+                console.log(orderData);  // Log order data for inspection
+
+                // Save order to localStorage
+                localStorage.setItem('order_' + orderData.id, JSON.stringify(orderData));
+
+                // Redirect to My Orders page
+                window.location.href = "orders.html";
+            });
+        });
+    </script>
+</body>
+
+</html>

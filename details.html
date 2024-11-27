@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c0d507fb28.js" crossorigin="anonymous"></script>
+    <title>Order Details</title>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <section id="header">
+        <a href="index.html"><img src="IMAGE/MAINLOGO.png" class="logo" alt="Logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a class="active" href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="orders.html">My Orders</a>
+                </li>
+                <li id="lg-bag"><a href="cart.html"><i class="fas fa-shopping-cart" style="color:black"></i></a></li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <i class="fas fa-shopping-cart"></i>
+            <i id="bar" class="fa-solid fa-outdent"></i>
+        </div>
+    </section>
+
+    <!-- Order Details Section -->
+    <section id="order-details" class="section-p1">
+        <h2>Your Order</h2>
+        <ul id="order-list" class="order-summary"></ul>
+        <div class="order-total">
+            <p><strong>Total:</strong> <span id="total-price">₱0</span></p>
+        </div>
+        <div class="action-buttons">
+            <a href="index.html" class="btn cancel-btn">Cancel</a>
+            <a href="index.html" class="btn home-btn">Go Back to Home</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="IMAGE/MAINLOGO.png" style="width: 150px; height: auto">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> University Road NBP Reservation Brgy. Poblacion, City of Muntinlupa.</p>
+            <p><strong>Phone:</strong> (+63) 931-701-5678</p>
+            <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+            <div class="follow">
+                <h4>Follow Us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/ihaveautism.crdo" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#" target="_blank">About Us</a>
+            <a href="#" target="_blank">Delivery Information</a>
+            <a href="#" target="_blank">Privacy Policy</a>
+            <a href="#" target="_blank">Terms & Conditions</a>
+            <a href="#" target="_blank">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign-In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="copywrite">
+            <p>&#169;2023, Flandez, Ricardo - HTML and CSS Template</p>
+        </div>
+    </footer>
+
+    <script>
+        // Example cart data (This should come from your localStorage or backend)
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [
+            { name: 'Don Quixote', quantity: 1, price: 600 },
+            { name: 'War and Peace', quantity: 2, price: 800 }
+        ];
+
+        const orderList = document.getElementById('order-list');
+        const totalPriceEl = document.getElementById('total-price');
+        let totalPrice = 0;
+
+        // Populate order list
+        cartItems.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `${item.quantity} x ${item.name} - ₱${item.price * item.quantity}`;
+            orderList.appendChild(li);
+            totalPrice += item.price * item.quantity;
+        });
+
+        // Update total price
+        totalPriceEl.textContent = `₱${totalPrice}`;
+
+        // Optional: Clear cart after viewing order details
+        document.querySelector('.cancel-btn').addEventListener('click', () => {
+            localStorage.removeItem('cart');
+        });
+    </script>
+
+    <style>
+        /* Styling for the Order Details Section */
+        #order-details {
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-summary {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .order-summary li {
+            font-size: 16px;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-total p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+        }
+
+        .action-buttons .btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cancel-btn {
+            background-color: red;
+        }
+
+        .cancel-btn:hover {
+            background-color: darkred;
+        }
+
+        .home-btn {
+            background-color: green;
+        }
+
+        .home-btn:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</body>
+
+</html>
